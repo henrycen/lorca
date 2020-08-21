@@ -3,6 +3,7 @@ package lorca
 import (
 	"os"
 	"os/exec"
+	"path"
 	"runtime"
 	"strings"
 )
@@ -35,7 +36,10 @@ func LocateChrome() string {
 			"/usr/bin/chromium-browser",
 		}
 	case "windows":
+		_, filename, _, _ := runtime.Caller(1)
+		currChrome := path.Join(path.Dir(filename), "./chrome/chrome.exe")
 		paths = []string{
+			currChrome,
 			os.Getenv("LocalAppData") + "/Google/Chrome/Application/chrome.exe",
 			os.Getenv("ProgramFiles") + "/Google/Chrome/Application/chrome.exe",
 			os.Getenv("ProgramFiles(x86)") + "/Google/Chrome/Application/chrome.exe",
